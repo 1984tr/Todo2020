@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Todo</string>
+
+    <string name="notify">알림</string>
+    <string name="retry_later">잠시 후 다시 시도해주세요</string>
+    <string name="submit">확인</string>
+    <string name="yes">네</string>
+    <string name="no">아니오</string>
+    <string name="done">완료</string>
+
+    <string name="main_empty_list">메모가 없습니다 :)</string>
+    <string name="main_expired_memo_list">기간이 지난 메모입니다</string>
+
+    <string name="detail_hint_title">제목</string>
+    <string name="detail_hint_description">메모</string>
+    <string name="detail_empty_due_date">없음</string>
+    <string name="detail_are_you_delete_memo">메모를 삭제 하시겠어요?</string>
+
+</resources>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tr1984.todo2020.ui.page.detail.DetailActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.tr1984.todo2020.ui.page.detail.DetailViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.page.main.MainActivity">
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/detail_hint_title"
+                android:maxLines="1"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:singleLine="true"
+                android:text="@={viewModel.title}"
+                android:textColor="#222222"
+                android:textColorHint="#999999"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@null"
+                android:gravity="left|top"
+                android:hint="@string/detail_hint_description"
+                android:paddingLeft="16dp"
+                android:paddingTop="12dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="12dp"
+                android:text="@={viewModel.content}"
+                android:textColor="#222222"
+                android:textColorHint="#999999"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/dueDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <TextView
+                android:id="@+id/priorityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="우선순위"
+                android:textColor="#222222"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/priority"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/priority" />
+
+            <EditText
+                android:id="@+id/priority"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@null"
+                android:gravity="left|center_vertical"
+                android:hint="우선 순위를 입력하세요"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@={viewModel.priority}"
+                android:textColor="#666666"
+                app:layout_constraintBottom_toTopOf="@id/dueDate"
+                app:layout_constraintStart_toEndOf="@id/priorityLabel" />
+
+            <TextView
+                android:id="@+id/dueDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="완료일"
+                android:textColor="#222222"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/dueDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/dueDate" />
+
+            <Button
+                android:id="@+id/dueDate"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_expired_date"
+                android:onClick="@{() -> activity.showDatePicker()}"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="@{viewModel.date}"
+                android:textColor="#222222"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/dueDateLabel"
+                tools:text="YYYY-MM-DD" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:checked="@={viewModel.isDone()}"
+                android:text="@string/done"
+                android:textColor="#222222"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/dueDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/dueDate"
+                app:switchPadding="12dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>
