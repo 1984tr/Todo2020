@@ -30,7 +30,7 @@ class DetailViewModel(repository: TodoRepository, provider: StringProvider) :
                 title.value = it.title
                 content.value = it.content
                 isDone.value = it.doneAt != null
-                it.expiredAt?.let { date ->
+                it.due?.let { date ->
                     val cal = Calendar.getInstance()
                     cal.time = date
                     this@DetailViewModel.date.value =
@@ -94,6 +94,6 @@ class DetailViewModel(repository: TodoRepository, provider: StringProvider) :
         val entity = todoEntity ?: TodoEntity().also {
             todoEntity = it
         }
-        entity.expiredAt = cal.time
+        entity.due = cal.time
     }
 }

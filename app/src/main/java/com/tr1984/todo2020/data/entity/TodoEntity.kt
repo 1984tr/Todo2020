@@ -11,7 +11,7 @@ data class TodoEntity(
     var priority: Int,
     var createdAt: Date,
     var doneAt: Date? = null,
-    var expiredAt: Date? = null
+    var due: Date? = null
 ) {
     constructor() : this("", "", 0, Date(), null, null)
 

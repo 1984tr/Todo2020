@@ -51,7 +51,7 @@ class MainViewModel(repository: TodoRepository, provider: StringProvider) : Base
             _items.value = entities.map { Todo(it, provider) }
 
             if (withExpiredCheck) {
-                val expired = entities.filter { it.expiredAt?.run {
+                val expired = entities.filter { it.due?.run {
                     before(Date())
                 } ?: false}
                 if (expired.isNotEmpty()) {

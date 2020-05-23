@@ -15,7 +15,7 @@ class Todo(val entity: TodoEntity, private val provider: StringProvider) {
     val content = Transformations.map(todo) { it.content ?: "" }
     val dateText = Transformations.map(todo) {
         if (it.doneAt == null) {
-            it.expiredAt?.run {
+            it.due?.run {
                 when (val gapOfDate = getGapOfDate(Calendar.getInstance().time, this)) {
                     0 -> "D-Day"
                     else -> "D${if (gapOfDate > 0) "+" else ""}${gapOfDate}"
@@ -32,7 +32,7 @@ class Todo(val entity: TodoEntity, private val provider: StringProvider) {
     }
     val statusLevel = Transformations.map(todo) {
         if (it.doneAt == null) {
-            it.expiredAt?.run {
+            it.due?.run {
                 if (getGapOfDate(Calendar.getInstance().time, this) == 0) {
                     0
                 } else {
