@@ -1,6 +1,5 @@
 package com.tr1984.todo2020.ui.page.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -9,7 +8,7 @@ import com.tr1984.todo2020.data.TodoRepository
 import com.tr1984.todo2020.data.entity.TodoEntity
 import com.tr1984.todo2020.model.Todo
 import com.tr1984.todo2020.ui.BaseViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainViewModel(repository: TodoRepository) : BaseViewModel(repository) {
@@ -39,25 +38,24 @@ class MainViewModel(repository: TodoRepository) : BaseViewModel(repository) {
             return _expiredTodos
         }
 
-    private var isNotified = false
-
     fun selectTodo(todo: Todo) {
         _selectedTodo.postValue(todo)
     }
 
-    fun fetch() {
+    fun fetch(withExpiredCheck: Boolean = false) {
         viewModelScope.launch {
             _refreshing.value = true
 
             val entities = repository.getAll()
             _items.value = entities.map { Todo(it) }
 
-            val expired = entities.filter { it.expiredAt?.run {
-                before(Date())
-            } ?: false}
-            if (!isNotified && expired.isNotEmpty()) {
-                isNotified = true
-                _expiredTodos.value = expired
+            if (withExpiredCheck) {
+                val expired = entities.filter { it.expiredAt?.run {
+                    before(Date())
+                } ?: false}
+                if (expired.isNotEmpty()) {
+                    _expiredTodos.value = expired
+                }
             }
             _refreshing.value = false
         }

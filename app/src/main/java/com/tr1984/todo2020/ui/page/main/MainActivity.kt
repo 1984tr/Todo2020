@@ -52,7 +52,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
             startDetailActivity()
         }
 
-        viewModel.fetch()
+        viewModel.fetch(true)
     }
 
     override fun observeViewModel() {

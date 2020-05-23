@@ -28,7 +28,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:onRefreshListener="@{() -> viewModel.fetch()}"
+            app:onRefreshListener="@{() -> viewModel.fetch(false)}"
             app:refreshing="@{viewModel.refreshing}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
