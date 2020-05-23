@@ -20,6 +20,7 @@ class DetailViewModel(repository: TodoRepository) : BaseViewModel(repository) {
 
     fun fetch(todoId: Long) {
         viewModelScope.launch {
+            _notifier.value = Notifier.Loading(true)
             val entity = repository.get(todoId)
             entity?.let {
                 todoEntity = it
@@ -34,11 +35,13 @@ class DetailViewModel(repository: TodoRepository) : BaseViewModel(repository) {
                 }
                 priority.value = it.priority.toString()
             }
+            _notifier.value = Notifier.Loading(false)
         }
     }
 
     fun submit(completion: () -> Unit) {
         viewModelScope.launch {
+            _notifier.value = Notifier.Loading(true)
             val title = title.value ?: ""
             if (title.isEmpty()) {
                 _notifier.value = Notifier.Toast("제목을 입력해주세요")
@@ -61,12 +64,14 @@ class DetailViewModel(repository: TodoRepository) : BaseViewModel(repository) {
                 }
             }
             repository.insertOrUpdate(entity)
+            _notifier.value = Notifier.Loading(false)
             completion.invoke()
         }
     }
 
     fun delete(completion: () -> Unit) {
         viewModelScope.launch {
+            _notifier.value = Notifier.Loading(true)
             todoEntity?.let {
                 if (repository.delete(it.id) > 0) {
                     completion.invoke()
@@ -74,6 +79,7 @@ class DetailViewModel(repository: TodoRepository) : BaseViewModel(repository) {
                     _notifier.value = Notifier.Toast("잠시 후 다시 시도해주세요 :(")
                 }
             }
+            _notifier.value = Notifier.Loading(false)
         }
     }
 
