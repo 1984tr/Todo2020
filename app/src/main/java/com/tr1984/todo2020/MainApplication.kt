@@ -2,6 +2,7 @@ package com.tr1984.todo2020
 
 import android.app.Application
 import com.tr1984.todo2020.data.repositoryModule
+import com.tr1984.todo2020.ui.contextModules
 import com.tr1984.todo2020.ui.viewModelModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,7 +16,7 @@ class MainApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(listOf(repositoryModule, viewModelModules))
+            modules(listOf(repositoryModule, viewModelModules, contextModules))
         }
     }
 }

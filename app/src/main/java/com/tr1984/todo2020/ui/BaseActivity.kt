@@ -8,9 +8,15 @@ import com.tr1984.todo2020.R
 import com.tr1984.todo2020.extensions.alert
 import com.tr1984.todo2020.extensions.toast
 import com.tr1984.todo2020.ui.dialog.LoadingDialog
+import com.tr1984.todo2020.utils.StringProvider
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.dsl.module
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
+
+val contextModules = module {
+    factory { StringProvider(get()) }
+}
 
 open class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 

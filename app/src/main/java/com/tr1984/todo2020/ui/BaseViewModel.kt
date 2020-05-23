@@ -8,15 +8,16 @@ import com.tr1984.todo2020.data.TodoRepository
 import com.tr1984.todo2020.ui.page.detail.DetailViewModel
 import com.tr1984.todo2020.ui.page.main.MainViewModel
 import com.tr1984.todo2020.utils.Logger
+import com.tr1984.todo2020.utils.StringProvider
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModules = module {
-    viewModel { MainViewModel(get()) }
-    viewModel { DetailViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
+    viewModel { DetailViewModel(get(), get()) }
 }
 
-open class BaseViewModel(protected val repository: TodoRepository) : ViewModel() {
+open class BaseViewModel(protected val repository: TodoRepository, protected val provider: StringProvider) : ViewModel() {
 
     val navigator: LiveData<Navigator>
         get() = _navigator

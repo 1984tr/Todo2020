@@ -8,10 +8,11 @@ import com.tr1984.todo2020.data.TodoRepository
 import com.tr1984.todo2020.data.entity.TodoEntity
 import com.tr1984.todo2020.model.Todo
 import com.tr1984.todo2020.ui.BaseViewModel
+import com.tr1984.todo2020.utils.StringProvider
 import kotlinx.coroutines.launch
 import java.util.*
 
-class MainViewModel(repository: TodoRepository) : BaseViewModel(repository) {
+class MainViewModel(repository: TodoRepository, provider: StringProvider) : BaseViewModel(repository, provider) {
 
     private val _refreshing = MutableLiveData(false)
     val refreshing: LiveData<Boolean>
@@ -47,7 +48,7 @@ class MainViewModel(repository: TodoRepository) : BaseViewModel(repository) {
             _refreshing.value = true
 
             val entities = repository.getAll()
-            _items.value = entities.map { Todo(it) }
+            _items.value = entities.map { Todo(it, provider) }
 
             if (withExpiredCheck) {
                 val expired = entities.filter { it.expiredAt?.run {
