@@ -44,7 +44,6 @@ class DetailViewModel(repository: TodoRepository, provider: StringProvider) :
 
     fun submit(completion: () -> Unit) {
         viewModelScope.launch {
-            _notifier.value = Notifier.Loading(true)
             val title = title.value ?: ""
             if (title.isEmpty()) {
                 _notifier.value = Notifier.Toast(provider.getString(R.string.detail_enter_title))
@@ -55,6 +54,7 @@ class DetailViewModel(repository: TodoRepository, provider: StringProvider) :
                 _notifier.value = Notifier.Toast(provider.getString(R.string.detail_enter_memo))
                 return@launch
             }
+            _notifier.value = Notifier.Loading(true)
             val entity = (todoEntity ?: TodoEntity()).apply {
                 this.title = title
                 this.content = content
