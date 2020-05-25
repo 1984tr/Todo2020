@@ -1,10 +1,11 @@
 package com.tr1984.todo2020.data
 
+import androidx.paging.DataSource
 import com.tr1984.todo2020.data.entity.TodoEntity
 
 interface TodoDataSource {
 
-    suspend fun getAll(): List<TodoEntity>
+    fun getAll(): DataSource.Factory<Int, TodoEntity>
 
     suspend fun get(id: Long): TodoEntity?
 

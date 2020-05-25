@@ -1,11 +1,9 @@
 package com.tr1984.todo2020.ui.page.main
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.tr1984.todo2020.R
@@ -16,13 +14,6 @@ import com.tr1984.todo2020.ui.page.detail.DetailActivity
 class MainActivity : BaseActivity<MainViewModel>() {
 
     private lateinit var binding: ActivityMainBinding
-    private val requestActivity by lazy {
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                viewModel.fetch()
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +43,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
             startDetailActivity()
         }
 
-        viewModel.fetch(true)
+        viewModel.checkExpired()
     }
 
     override fun observeViewModel() {
@@ -65,7 +56,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
             if (it.isEmpty()) {
                 return@Observer
             }
-            val titles = it.map { it.title }
+            val titles = it.map { it.entity.title }
             AlertDialog.Builder(this@MainActivity)
                 .setTitle(getString(R.string.main_expired_memo_list))
                 .setAdapter(
@@ -75,7 +66,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
                         titles
                     )
                 ) { dialog, position ->
-                    val todoId = it[position].id
+                    val todoId = it[position].entity.id
                     startDetailActivity(true, todoId)
                     dialog.dismiss()
                 }
@@ -90,7 +81,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     private fun startDetailActivity(isEdit: Boolean = false, todoId: Long = 0) {
-        requestActivity.launch(Intent(this, DetailActivity::class.java).apply {
+        startActivity(Intent(this, DetailActivity::class.java).apply {
             putExtra(DetailActivity.EXTRA_EDIT, isEdit)
             putExtra(DetailActivity.EXTRA_TODO_ID, todoId)
         })

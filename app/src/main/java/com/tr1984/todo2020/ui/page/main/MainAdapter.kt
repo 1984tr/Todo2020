@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tr1984.todo2020.R
 import com.tr1984.todo2020.databinding.ItemTodoBinding
@@ -16,7 +16,7 @@ class MainAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val viewModel: MainViewModel
 ) :
-    ListAdapter<Todo, MainAdapter.Holder>(diffCallback) {
+    PagedListAdapter<Todo, MainAdapter.Holder>(diffCallback) {
 
     init {
         viewModel.items.observe(lifecycleOwner, Observer {

@@ -1,6 +1,7 @@
 package com.tr1984.todo2020.data
 
 import android.content.Context
+import androidx.paging.DataSource
 import com.tr1984.todo2020.data.entity.TodoEntity
 import com.tr1984.todo2020.data.local.TodoLocalDataSource
 import com.tr1984.todo2020.data.local.TodoTestDataSource
@@ -17,10 +18,10 @@ class TodoRepository(context: Context) :
     TodoDataSource {
 
     private val isTest: Boolean = false
-    private val testDataSource by lazy { TodoTestDataSource() }
+    private val testDataSource by lazy { TodoTestDataSource(TodoDatabase.getInstance(context)) }
     private val local by lazy { TodoLocalDataSource(TodoDatabase.getInstance(context)) }
 
-    override suspend fun getAll(): List<TodoEntity> {
+    override fun getAll(): DataSource.Factory<Int, TodoEntity> {
         return if (isTest) {
             testDataSource.getAll()
         } else {

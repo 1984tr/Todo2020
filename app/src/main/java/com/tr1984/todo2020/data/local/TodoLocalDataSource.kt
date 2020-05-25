@@ -1,12 +1,13 @@
 package com.tr1984.todo2020.data.local
 
+import androidx.paging.DataSource
 import com.tr1984.todo2020.data.TodoDataSource
 import com.tr1984.todo2020.data.entity.TodoEntity
 import com.tr1984.todo2020.data.local.database.TodoDatabase
 
 class TodoLocalDataSource(private val database: TodoDatabase) : TodoDataSource {
 
-    override suspend fun getAll(): List<TodoEntity> {
+    override fun getAll(): DataSource.Factory<Int, TodoEntity> {
         return database.todoDao().getAll()
     }
 

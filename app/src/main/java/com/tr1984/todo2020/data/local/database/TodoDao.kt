@@ -1,13 +1,17 @@
 package com.tr1984.todo2020.data.local.database
 
-import androidx.room.*
+import androidx.paging.DataSource
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.tr1984.todo2020.data.entity.TodoEntity
 
 @Dao
 interface TodoDao {
 
     @Query("SELECT * FROM todos ORDER BY priority DESC")
-    suspend fun getAll(): List<TodoEntity>
+    fun getAll(): DataSource.Factory<Int, TodoEntity>
 
     @Query("SELECT * FROM todos WHERE id = :id")
     suspend fun get(id: Long): TodoEntity?
